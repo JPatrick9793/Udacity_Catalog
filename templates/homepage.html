@@ -1,0 +1,27 @@
+<html>
+  <head></head>
+  <body>
+
+  	<a href='{{ url_for('getLogin') }}'> Login </a>
+  	<br>
+  	<a href='{{ url_for('gdisconnect') }}'> Logout </a>
+  	<p>Login Session, current state: {{ login_session['state'] }}</p>
+  	<ul>
+  		<li>{{ login_session['username'] }}</li>
+  		<li>{{ login_session['email'] }}</li>
+  		<li>{{ login_session['access_token'] }}</li>
+  	</ul>
+  	<br>
+
+  	{% for user in users %}
+  	<h1>{{ user.username }}</h1>
+  	<ul>
+  	  <li>{{ user.id }}</li>
+  	  <li>{{ user.email }}</li>
+  	  <li>{{ user.picture }}</li>
+	</ul>
+	<br>
+	{% endfor %}
+
+  </body>
+</html>
