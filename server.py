@@ -25,13 +25,23 @@ app = Flask(__name__)
 auth = HTTPBasicAuth()
 
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open( 'client_secrets.json', 'r').read() )['web']['client_id']
 
 @app.route('/')
 @app.route('/home')
 def getHomePage():
     users = session.query(User).all()
-    return render_template('homepage.html', users = users, login_session = login_session)
+    try: 
+        return render_template(
+            'homepage.html',
+            users = users,
+            login_session = login_session
+            )
+    except:
+        return render_template(
+            'homepage_loggedout.html',
+            users = users
+            )
 
 
 @app.route('/login')
@@ -148,6 +158,7 @@ def gdisconnect():
         del login_session['username']
         del login_session['email']
         del login_session['picture']
+        del login_session['user_id']
         return redirect(url_for('getHomePage'), code=200)
 
     else:
@@ -156,9 +167,13 @@ def gdisconnect():
         return response
 
 
-@app.route('/delete/<int:id>', methods=['POST', 'GET'])
+@app.route('/delete/<int:user_id>', methods=['POST', 'GET'])
 def deleteUser(id):
-    deletedUser = session.query(User).filter_by(id = id).one()
+    #Login user can only access his/her own information
+    if user_id != login_session['user_id']:
+        return render_template('youShallNotPass.html')
+
+    deletedUser = session.query(User).filter_by(id = user_id).one()
     if request.method == 'GET':
         return jsonify(user = deletedUser.serialize)
     if request.method == 'POST':
@@ -166,21 +181,91 @@ def deleteUser(id):
         session.commit()
         return "User has been removed"
 
+
 @app.route('/catalog/<int:user_id>')
 def getCatalog(user_id):
-    return ("List of all products for user %s" % user_id)
+    #Login user can only access his/her own information
+    if user_id != login_session['user_id']:
+        return render_template('youShallNotPass.html')
+    #query all users items
+    items = session.query(Items).filter_by( user_id = login_session['user_id'] ).all()
+    return render_template('getCatalog_GET.html',
+        items = items,
+        login_session = login_session 
+        )
 
-@app.route('/catalog/<int:user_id>/create')
-def getCreate(user_id):
-    return ("Create a new entry into the database for user %s" % user_id)
 
-@app.route('/catalog/<int:user_id>/update/<int:item_id>')
+@app.route('/catalog/<int:id>/create', methods = ['GET', 'POST'])
+def getCreate(id):
+    #Login user can only access his/her own information
+    if id != login_session['user_id']:
+        return render_template('youShallNotPass.html')
+
+    user = session.query(User).filter_by(id = login_session['user_id']).one()
+    if request.method == 'POST':
+        newItem = Items(
+            name = request.form['name'],
+            user_id = login_session['user_id'],
+            description = request.form['description']
+            )
+        session.add(newItem)
+        session.commit()
+        return redirect(url_for('getCatalog', user_id = id))
+
+    if request.method == 'GET':
+        return render_template('getCreate_GET.html',
+            user = user,
+            login_session = login_session
+            )
+
+
+@app.route('/catalog/<int:user_id>/update/<int:item_id>', methods = ['GET', 'POST'])
 def getUpdate(user_id, item_id):
-    return ("edit a current entry for item %s in the database for user %s" % (item_id, user_id) )
+    #Login user can only access his/her own information
+    if user_id != login_session['user_id']:
+        return render_template('youShallNotPass.html')
 
-@app.route('/catalog/<int:user_id>/delete/<int:item_id>')
+    editedItem = session.query(Items).filter_by(id = item_id).one()
+    if request.method == 'GET':
+        return render_template(
+            'getUpdate_GET.html',
+            item = editedItem,
+            login_session = login_session
+            )
+
+    if request.method == 'POST':
+        if request.form['name']:
+            editedItem.name = request.form['name']
+        if request.form['description']:
+            editedItem.description = request.form['description']
+        session.add(editedItem)
+        session.commit()
+        return redirect(url_for('getCatalog', user_id = user_id))
+    
+
+@app.route('/catalog/<int:user_id>/delete/<int:item_id>', methods = ['GET', 'POST'])
 def getDelete(user_id, item_id):
-    return ("delete item %s in the database for user %s" % (item_id, user_id) )
+    #Login user can only access his/her own information
+    if user_id != login_session['user_id']:
+        return render_template('youShallNotPass.html')
+
+    user = session.query(User).filter_by(id = user_id).one()
+    deletedItem = session.query(Items).filter_by(id = item_id).one()
+
+    if request.method == 'GET':
+        return render_template('getDelete_GET.html',
+            item = deletedItem,
+            login_session = login_session
+            )
+
+    if request.method == 'POST':
+        session.delete(deletedItem)
+        session.commit()
+        return redirect(
+            url_for(
+                'getCatalog', user_id = user_id
+                )
+            )
 
 
 def getUserID(email):
@@ -190,7 +275,7 @@ def getUserID(email):
   except:
     return None
 
-def createUser( login_session ):
+def createUser(login_session):
   newUser = User( username = login_session['username'], email = login_session['email'], 
     picture = login_session['picture'])
   session.add(newUser)

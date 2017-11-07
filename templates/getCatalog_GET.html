@@ -1,0 +1,26 @@
+<html>
+  <head></head>
+  <body>
+
+  	<a href = '{{ url_for('getHomePage') }}' method = 'get'>HomePage</a>
+  	<br>
+    <a href = '{{ url_for('getCreate', id = login_session['user_id'] ) }}' method = 'get'>Create new Item</a>
+    <br>
+
+  	<h1>All current user's items:</h1>
+
+  	{% for item in items %}
+  	<ul>
+  	  <li>name    : {{ item.name }}</li>
+  	  <li>description   : {{ item.description }}</li>  
+      <li>user_id : {{ item.user_id }}</li>
+      <li>id      : {{ item.id }}</li>
+      <li><a href =  '{{ url_for('getUpdate',user_id = login_session['user_id'], item_id = item.id )}}'>EDIT</a></li>
+      <li><a href =  '{{ url_for('getDelete',user_id = login_session['user_id'], item_id = item.id )}}'>DELETE</a></li>
+
+	</ul>
+	<br>
+	{% endfor %}
+
+  </body>
+</html>

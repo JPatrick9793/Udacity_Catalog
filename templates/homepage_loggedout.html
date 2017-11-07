@@ -6,16 +6,6 @@
   	<br>
   	<a href='{{ url_for('gdisconnect') }}'> Logout </a>
   	<br>
-  	<a href='{{ url_for('getCatalog', user_id = login_session['user_id']) }}'> Catalog </a>
-  	<br>
-
-  	<p>Login Session, current state: {{ login_session['state'] }}</p>
-  	<ul>
-  		<li>{{ login_session['username'] }}</li>
-  		<li>{{ login_session['email'] }}</li>
-  		<li>{{ login_session['access_token'] }}</li>
-  		<li>{{ login_session['user_id'] }}</li>
-  	</ul>
 
   	<h1>All current registered users:</h1>
 
