@@ -267,6 +267,14 @@ def getDelete(user_id, item_id):
                 )
             )
 
+@app.route('/catalog/<int:user_id>/<int:item_id>/JSON')
+def getItemJSON(user_id, item_id):
+    #Login user can only access his/her own information
+    if user_id != login_session['user_id']:
+        return render_template('youShallNotPass.html')
+        
+    item = session.query(Items).filter_by(id = item_id).one()
+    return jsonify(item.serialize)
 
 def getUserID(email):
   try:

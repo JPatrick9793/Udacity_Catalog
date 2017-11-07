@@ -17,6 +17,7 @@
       <li>id      : {{ item.id }}</li>
       <li><a href =  '{{ url_for('getUpdate',user_id = login_session['user_id'], item_id = item.id )}}'>EDIT</a></li>
       <li><a href =  '{{ url_for('getDelete',user_id = login_session['user_id'], item_id = item.id )}}'>DELETE</a></li>
+      <li><a href =  '{{ url_for('getItemJSON',user_id = login_session['user_id'], item_id = item.id )}}'>JSON</a></li>
 
 	</ul>
 	<br>
