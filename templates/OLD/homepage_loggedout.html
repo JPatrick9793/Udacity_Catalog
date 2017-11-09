@@ -1,0 +1,23 @@
+<html>
+  <head></head>
+  <body>
+
+  	<a href='{{ url_for('getLogin') }}'> Login </a>
+  	<br>
+  	<a href='{{ url_for('gdisconnect') }}'> Logout </a>
+  	<br>
+
+  	<h1>All current registered users:</h1>
+
+  	{% for user in users %}
+  	<ul>
+  	  <li>id      : {{ user.id }}</li>
+  	  <li>username: {{ user.username }}</li>
+  	  <li>email   : {{ user.email }}</li>
+  	  <li>picture : {{ user.picture }}</li>
+	</ul>
+	<br>
+	{% endfor %}
+
+  </body>
+</html>

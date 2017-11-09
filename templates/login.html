@@ -1,15 +1,28 @@
-
+<!DOCTYPE html>
 <html>
 <head>
-  <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <script src="//apis.google.com/js/platform.js?onload=start"></script>
-  <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
+
+  <meta charset="UTF-8">
+
+  <title>A Pen by  John Conway</title>
+
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='getCatalog.css') }}">
 </head>
 
-<body>  
-<!-- GOOGLE PLUS SIGN IN-->        
-  <div id="signinButton">
+<body>
+<header class="header_container">
+    <h1 class="header_item" id="logo">CATALOG</h1>
+    <h3 class="header_item" id="header_description">Create, Read, Update, and DESTROY your own Items</h3>
+</header>
+
+<nav class="nav_container">
+</nav>
+
+<div class="body_container">
+  <div class="body_item" id="body_header">
+    <div id="signinButton">
           <span class="g-signin"
             data-scope="openid email"
             data-clientid="103508732096-jt8jlmikknc1cqj5uur8sab14s9tn0ba.apps.googleusercontent.com"
@@ -52,70 +65,18 @@ function signInCallback(authResult) {
       
   }); } }
 </script>
-<!--END GOOGLE PLUS SIGN IN -->
+  </div>
+</div>
 
-<!--FACEBOOK SIGN IN 
-<script>
-  window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '323809391418441',
-    cookie     : true,  // enable cookies to allow the server to access 
-                        // the session
-    xfbml      : true,  // parse social plugins on this page
-    version    : 'v2.10' // use version 2.8
-  });
-  };
-  // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
-  function sendTokenToServer() {
-    var access_token = FB.getAuthResponse()['accessToken'];
-    console.log(access_token)
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-     $.ajax({
-      type: 'POST',
-      url: '/fbconnect?state={{STATE}}',
-      processData: false,
-      data: access_token,
-      contentType: 'application/octet-stream; charset=utf-8',
-      success: function(result) {
-        // Handle or verify the server response if necessary.
-        if (result) {
-          $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
-         setTimeout(function() {
-          window.location.href = "/restaurant";
-         }, 4000);
-          
-      } else {
-        $('#result').html('Failed to make a server-side call. Check your configuration and console.');
-         }
-      }
-      
-  });
-    });
-  }
-</script>
-
-
-<button>
-         
-
-          <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
-<a href='javascript:sendTokenToServer()'>Login with Facebook</a>
-
-</fb:login-button>
-
-
-        </button>
-END FACEBOOK SIGN IN -->
-  </body>
+<footer class="footer_container" id="footer">
+  <div class="footer_item"> By: John Conway   </div>
+  <div class="footer_item">
+    <a href="http://jigsaw.w3.org/css-validator/check/referer">
+      <img src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!"/>
+    </a>
+  </div>
+</footer>
+  
+  
+</body>
 </html>

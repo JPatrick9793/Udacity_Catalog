@@ -1,28 +1,73 @@
+
 <html>
-	<head>Updating Item...</head>
-	<body>
-		<form action = '{{ url_for('getUpdate', user_id = login_session['user_id'], item_id = item.id) }}' method = 'post'>
+<head>
+  <meta charset="UTF-8">
 
-		<p>Name:</p>
+  <title>A Pen by  John Conway</title>
+  
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='getCreate.css') }}">
+</head>
 
-		<input type ='text' size='30' name='name' placeholder='{{ item.name }}'>
+<body>
+  <header class="header_container">
+    <h1 class="header_item" id="logo">CATALOG</h1>
 
-		<p>Description:</p>
+    <h3 class="header_item" id="header_description">Create, Read, Update, and DESTROY your own Items</h3>
+  </header>
 
-		<input type ='text' size='75' name='description' placeholder='{{ item.description }}'>
+  <nav class="nav_container">
+    <a href='{{ url_for('getHomePage') }}' class="nav_item">Home</a>
+  
+    <a href='{{url_for('getCatalog',user_id=login_session['user_id'])}}' class="nav_item">Return to Catalog</a>
+  </nav>
 
-		<br>
-		<br>
+<div class="body_container">
+  <div class="body_item" id="body_header">
+    <h3>
+      UPDATE ITEM {{item.name}}:
+    </h3>
+  </div>
+  
+  <div class="body_item">
+    <form action = '{{ url_for('getUpdate', user_id = login_session['user_id'], item_id = item.id) }}' method = 'post'>
+      <table>
+		<tr>
+			<td class="body_table_label">Name:</td>
+			<td><input type ='text' size='30' name='name' placeholder='{{item.name}}'></td>
+		</tr>
 
-		<input type='submit' value='Submit'>
+		<tr>
+			<td class="body_table_label">Description:</td>
+			<td><input type ='text' size='75' name='description' placeholder='{{item.description}}'></td>
+		</tr>
+	  </table>
 
-		<br>
-		<br>
+	  <br>
 
-		<a href ='{{url_for('getCatalog',user_id=login_session['user_id'])}}' method='get'>
-		Return to catalog</a>
+	  <br>
 
+	  <input type='submit' value='SUBMIT' class="body_button">
+
+	  <br>
+
+	  <br>
+
+	  <form action='{{url_for('getCatalog',user_id=login_session['user_id'])}}' method='get'>
+     	<input type='submit' value="WOAHHH nvm" class="body_button">
+	  </form>
 	</form>
+  </div>
+</div>
 
-	</body>
+<footer class="footer_container" id="footer">
+  <div class="footer_item"> By: John Conway   </div>
+  <div class="footer_item">
+    <a href="http://jigsaw.w3.org/css-validator/check/referer">
+      <img src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!"/>
+    </a>
+  </div>
+</footer>
+  
+  
+</body>
 </html>

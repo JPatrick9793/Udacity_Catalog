@@ -1,0 +1,13 @@
+<html>
+	<head>Deleting item.. {{ item.name }}</head>
+	<body>
+		<br>
+		<br>
+		<form action = '{{ url_for('getDelete',user_id=login_session['user_id'],item_id=item.id) }}' method = 'post'>
+			<p>ARE YOU SURE?????</p>
+			<input type='submit' value='DUH'>
+		</form>
+		<a href ='{{url_for('getCatalog',user_id=login_session['user_id'])}}' method='get'>
+		jk lolz</a>
+	</body>
+</html>

@@ -1,13 +1,55 @@
+
 <html>
-	<head>Deleting item.. {{ item.name }}</head>
-	<body>
-		<br>
-		<br>
-		<form action = '{{ url_for('getDelete',user_id=login_session['user_id'],item_id=item.id) }}' method = 'post'>
-			<p>ARE YOU SURE?????</p>
-			<input type='submit' value='DUH'>
-		</form>
-		<a href ='{{url_for('getCatalog',user_id=login_session['user_id'])}}' method='get'>
-		jk lolz</a>
-	</body>
+<head>
+  <meta charset="UTF-8">
+
+  <title>DELETE</title>
+  
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='getCreate.css') }}">
+</head>
+
+<body>
+  <header class="header_container">
+    <h1 class="header_item" id="logo">CATALOG</h1>
+
+    <h3 class="header_item" id="header_description">Create, Read, Update, and DESTROY your own Items</h3>
+  </header>
+
+  <nav class="nav_container">
+    <a href='{{ url_for('getHomePage') }}' class="nav_item">Home</a>
+  
+    <a href='{{url_for('getCatalog',user_id=login_session['user_id'])}}' class="nav_item">Return to Catalog</a>
+  </nav>
+
+<div class="body_container">
+  <div class="body_item" id="body_header">
+    <h3>
+      ARE YOU ABSOLUTELY, POSITIVELY SURE YOU WANT TO DELETE THIS ITEM???
+    </h3>
+
+    <br>
+
+    <form action = '{{ url_for('getDelete',user_id=login_session['user_id'],item_id=item.id) }}' method = 'post'>
+	  <input type='submit' value='OH YEAH' class="body_button">
+    </form>
+
+	<br>
+
+	<form action='{{url_for('getCatalog',user_id=login_session['user_id'])}}' method='get'>
+      <input type='submit' value="... JK lol" class="body_button">
+	</form>
+  </div>
+</div>
+
+<footer class="footer_container" id="footer">
+  <div class="footer_item"> By: John Conway   </div>
+  <div class="footer_item">
+    <a href="http://jigsaw.w3.org/css-validator/check/referer">
+      <img src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!"/>
+    </a>
+  </div>
+</footer>
+  
+  
+</body>
 </html>
