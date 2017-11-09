@@ -1,33 +1,52 @@
+
 <html>
-  <head></head>
-  <body>
+<head>
+  <meta charset="UTF-8">
 
-  	<a href='{{ url_for('getLogin') }}'> Login </a>
-  	<br>
-  	<a href='{{ url_for('gdisconnect') }}'> Logout </a>
-  	<br>
-  	<a href='{{ url_for('getCatalog', user_id = login_session['user_id']) }}'> Catalog </a>
-  	<br>
+  <title>A Pen by  John Conway</title>
+  
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+</head>
 
-  	<p>Login Session, current state: {{ login_session['state'] }}</p>
-  	<ul>
-  		<li>{{ login_session['username'] }}</li>
-  		<li>{{ login_session['email'] }}</li>
-  		<li>{{ login_session['access_token'] }}</li>
-  		<li>{{ login_session['user_id'] }}</li>
-  	</ul>
+<body>
+  <header class="header_container">
+  <h1 class="header_item" id="logo">CATALOG</h1>
+  <h3 class="header_item" id="header_description">Create, Read, Update, and DESTROY your own Items</h3>
+  </header>
 
-  	<h1>All current registered users:</h1>
+  <nav class="nav_container">
+    <a href='{{ url_for('getLogin') }}' class="nav_item">Login</a>
+  
+    <a href='{{ url_for('gdisconnect') }}' class="nav_item">Logout</a>
+  
+    <a href='{{ url_for('getCatalog', user_id = login_session['user_id']) }}' class="nav_item">Catalog</a>
+</nav>
 
-  	{% for user in users %}
-  	<ul>
-  	  <li>id      : {{ user.id }}</li>
-  	  <li>username: {{ user.username }}</li>
-  	  <li>email   : {{ user.email }}</li>
-  	  <li>picture : {{ user.picture }}</li>
-	</ul>
-	<br>
-	{% endfor %}
+<div class="body_container">
+  <div class="body_item">
+    <h3>
+      You are currently logged in as: {{ login_session['email'] }}
+    </h3>
+  </div>
+  
+  <div class="body_item">
+    Username: {{ login_session['username'] }}
+  </div>
+  
+  <div class="body_item">
+    Picture: <img src="{{ login_session['picture'] }}" id="image">
+  </div>
+</div>
 
-  </body>
+<footer class="footer_container" id="footer">
+  <div class="footer_item"> By: John Conway   </div>
+  <div class="footer_item">
+    <a href="http://jigsaw.w3.org/css-validator/check/referer">
+      <img src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!"/>
+    </a>
+  </div>
+</footer>
+  
+  
+</body>
 </html>

@@ -1,27 +1,57 @@
+<!DOCTYPE html>
 <html>
-  <head></head>
-  <body>
+<head>
+  <meta charset="UTF-8">
 
-  	<a href = '{{ url_for('getHomePage') }}' method = 'get'>HomePage</a>
-  	<br>
-    <a href = '{{ url_for('getCreate', id = login_session['user_id'] ) }}' method = 'get'>Create new Item</a>
-    <br>
+  <title>A Pen by  John Conway</title>
 
-  	<h1>All current user's items:</h1>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='getCatalog.css') }}">
+</head>
 
-  	{% for item in items %}
-  	<ul>
-  	  <li>name    : {{ item.name }}</li>
-  	  <li>description   : {{ item.description }}</li>  
-      <li>user_id : {{ item.user_id }}</li>
-      <li>id      : {{ item.id }}</li>
-      <li><a href =  '{{ url_for('getUpdate',user_id = login_session['user_id'], item_id = item.id )}}'>EDIT</a></li>
-      <li><a href =  '{{ url_for('getDelete',user_id = login_session['user_id'], item_id = item.id )}}'>DELETE</a></li>
-      <li><a href =  '{{ url_for('getItemJSON',user_id = login_session['user_id'], item_id = item.id )}}'>JSON</a></li>
+<body>
+  <header class="header_container">
+    <h1 class="header_item" id="logo">CATALOG</h1>
+    <h3 class="header_item" id="header_description">Create, Read, Update, and DESTROY your own Items</h3>
+  </header>
 
-	</ul>
-	<br>
-	{% endfor %}
+  <nav class="nav_container">
+    <a href = '{{ url_for('getHomePage') }}' method = 'get' class="nav_item">HomePage</a>
+  
+    <a href = '{{ url_for('getCreate', id = login_session['user_id'] ) }}' method = 'get' class="nav_item">Create new Item</a>
+</nav>
 
-  </body>
+<div class="body_container">
+  <div class="body_item" id="body_header">
+    <h1>All current user's items:</h1>
+  </div>
+
+  {% for item in items %}
+  <div class="body_item">
+    <p>Name    : {{ item.name }}</p>
+
+    <p>Description   : {{ item.description }}</p>
+
+    <nav>
+      <a href='{{ url_for('getUpdate',user_id=login_session['user_id'], item_id=item.id )}}'>EDIT</a> |
+
+      <a href='{{ url_for('getDelete',user_id=login_session['user_id'], item_id=item.id )}}'>DELETE</a> |
+
+      <a href='{{ url_for('getItemJSON',user_id=login_session['user_id'], item_id=item.id )}}'>JSON</a>
+    </nav>
+  </div>
+  {% endfor %}
+
+</div>
+
+<footer class="footer_container" id="footer">
+  <div class="footer_item"> By: John Conway   </div>
+  <div class="footer_item">
+    <a href="http://jigsaw.w3.org/css-validator/check/referer">
+      <img src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!"/>
+    </a>
+  </div>
+</footer>
+  
+  
+</body>
 </html>
